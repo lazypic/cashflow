@@ -53,12 +53,12 @@ func main() {
 			break
 		}
 	}
-	fmt.Println(isTableName)
+
+	if !isTableName {
+		// 테이블 생성
+	}
+	// argv받기.
+	// 아이템 추가하기.
+	// 분기별 보고 출력하기.
 }
 
-// cashflow 테이블이 존재하는가?
-// f : 생성
-// t : pass
-// argv받기.
-// 아이템 추가하기.
-// 분기별 보고 출력하기.
