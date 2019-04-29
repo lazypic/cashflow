@@ -10,6 +10,6 @@ type Item struct {
 	MonetaryUnit        string // 단위 : ￦,$
 	Sender              string // 보내는이
 	Recipient           string // 받는이
-	Project				string // 관련 프로젝트명
+	Project             string // 관련 프로젝트명
 	Description         string // 설명
 }
