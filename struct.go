@@ -1,5 +1,10 @@
 package main
 
+import (
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/service/dynamodb"
+)
+
 type Item struct {
 	Quarter             string // 분기 2019Q1 : Partition Key
 	DepositDate         string // 예정일 2019-04-11T18:26:00+09:00  : SortKey
@@ -12,4 +17,31 @@ type Item struct {
 	Recipient           string // 받는이
 	Project             string // 관련 프로젝트명
 	Description         string // 설명
+}
+
+func tableStruct(tableName string) *dynamodb.CreateTableInput {
+	return &dynamodb.CreateTableInput{
+		AttributeDefinitions: []*dynamodb.AttributeDefinition{
+			{
+				AttributeName: aws.String("Quarter"),
+				AttributeType: aws.String("S"),
+			},
+			{
+				AttributeName: aws.String("DepositDate"),
+				AttributeType: aws.String("S"),
+			},
+		},
+		KeySchema: []*dynamodb.KeySchemaElement{
+			{
+				AttributeName: aws.String("Quarter"),
+				KeyType:       aws.String("HASH"),
+			},
+			{
+				AttributeName: aws.String("DepositDate"),
+				KeyType:       aws.String("RANGE"),
+			},
+		},
+		BillingMode: aws.String(dynamodb.BillingModePayPerRequest), // ondemand
+		TableName:   aws.String(tableName),
+	}
 }

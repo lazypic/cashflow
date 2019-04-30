@@ -6,6 +6,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
+	"os"
 )
 
 func main() {
@@ -17,7 +18,7 @@ func main() {
 	}))
 	svc := dynamodb.New(sess)
 	input := &dynamodb.ListTablesInput{}
-	tableName := "cashflow"
+	tableName := "cashflow_demo"
 	isTableName := false
 	// 한번에 최대 100개의 테이블만 가지고 올 수 있다.
 	// 한 리전에 최대 256개의 테이블이 존재할 수 있다.
@@ -55,7 +56,12 @@ func main() {
 	}
 
 	if !isTableName {
-		// 테이블 생성
+		_, err := svc.CreateTable(tableStruct(tableName))
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
+			os.Exit(1)
+		}
+		fmt.Println("Created the table", tableName)
 	}
 	// argv받기.
 	// 아이템 추가하기.
