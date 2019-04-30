@@ -6,6 +6,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
+	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 	"os"
 )
 
@@ -64,6 +65,36 @@ func main() {
 		fmt.Println("Created the table", tableName)
 	}
 	// argv받기.
+	// 구현필요함.
 	// 아이템 추가하기.
+	item := Item{
+		Quarter:             "2019Q1",
+		DepositDate:         "2019-04-11T18:26:00+09:00",
+		DepositAmount:       10000,
+		ActualDepositDate:   "2019-04-11T18:26:00+09:00",
+		ActualDepositAmount: 10000,
+		Typ:                 "donation",
+		MonetaryUnit:        "$",
+		Sender:              "test",
+		Recipient:           "lazypic",
+		Project:             "project name",
+		Description:         "description",
+	}
+	dynamodbJson, err := dynamodbattribute.MarshalMap(item)
+	if err != nil {
+		fmt.Println(err.Error())
+		os.Exit(1)
+	}
+
+	data := &dynamodb.PutItemInput{
+		Item:      dynamodbJson,
+		TableName: aws.String(tableName),
+	}
+	_, err = svc.PutItem(data)
+	if err != nil {
+		fmt.Println(err.Error())
+		os.Exit(1)
+	}
+	fmt.Printf("Successfully added %v\n", item)
 	// 분기별 보고 출력하기.
 }
