@@ -65,7 +65,6 @@ func main() {
 		fmt.Println("Created the table", tableName)
 	}
 	// argv받기.
-	// 구현필요함.
 	// 아이템 추가하기.
 	item := Item{
 		Quarter:             "2019Q1",
@@ -96,5 +95,6 @@ func main() {
 		os.Exit(1)
 	}
 	fmt.Printf("Successfully added %v\n", item)
+	// 데이터 가지고 오기
 	// 분기별 보고 출력하기.
 }
