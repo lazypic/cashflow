@@ -69,12 +69,12 @@ func main() {
 	// 아이템 추가하기.
 	item := Item{
 		Quarter:             "2019Q1",
-		DepositDate:         "2019-04-11T18:26:00+09:00",
+		DepositDate:         "2019-04-12T18:26:00+09:00",
 		DepositAmount:       10000,
-		ActualDepositDate:   "2019-04-11T18:26:00+09:00",
+		ActualDepositDate:   "2019-04-12T18:26:00+09:00",
 		ActualDepositAmount: 10000,
 		Typ:                 "donation",
-		MonetaryUnit:        "$",
+		MonetaryUnit:        "KRW",
 		Sender:              "test",
 		Recipient:           "lazypic",
 		Project:             "project name",
