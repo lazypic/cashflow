@@ -32,5 +32,5 @@ func RFC3339_to_ShortQuarter(rfctime string) (string, error) {
 	if err != nil {
 		return rfctime, err
 	}
-	return fmt.Sprintf("%dQ%s", t.Month()/3+1, rfttime[2:4]), nil
+	return fmt.Sprintf("%dQ%s", t.Month()/3+1, rfctime[2:4]), nil
 }
