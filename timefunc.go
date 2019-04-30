@@ -20,16 +20,5 @@ func RFC3339_to_Quarter(rfctime string) (string, error) {
 	if err != nil {
 		return rfctime, err
 	}
-	q := 1
-	switch t.Month() {
-	case 1, 2, 3:
-		q = 1
-	case 4, 5, 6:
-		q = 2
-	case 7, 8, 9:
-		q = 3
-	case 10, 11, 12:
-		q = 4
-	}
-	return fmt.Sprintf("%sQ%d", rfctime[0:4], q), nil
+	return fmt.Sprintf("%dQ%d", t.Year(), t.Month()/3 + 1, nil
 }
