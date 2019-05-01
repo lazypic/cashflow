@@ -2,6 +2,7 @@
 현금의 흐름, 계획을 도와주는 Commandline 툴.
 
 ### Plan
+- Serverless 소프트웨어
 - Attrribute가 안정화 되면 GUI를 제작한다.
 - cashflow는 최종적으로 다음 dynamoDB 와 연동한다.
     - projects : 프로젝트
