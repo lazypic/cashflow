@@ -20,7 +20,7 @@ func RFC3339_to_Quarter(rfctime string) (string, error) {
 	if err != nil {
 		return rfctime, err
 	}
-	return fmt.Sprintf("%dQ%d", t.Year(), t.Month()/3+1), nil
+	return fmt.Sprintf("%dQ%d", t.Year(), ((t.Month()-1)/3)+1), nil
 }
 
 // RFC3339 시간형식을 짧은 분기문자로 변환한다.
@@ -32,5 +32,5 @@ func RFC3339_to_ShortQuarter(rfctime string) (string, error) {
 	if err != nil {
 		return rfctime, err
 	}
-	return fmt.Sprintf("%dQ%s", t.Month()/3+1, rfctime[2:4]), nil
+	return fmt.Sprintf("%dQ%s", ((t.Month()-1)/3)+1, rfctime[2:4]), nil
 }
