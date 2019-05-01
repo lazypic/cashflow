@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func Test_RFC3339_to_Quarter(t *testing.T) {
+func Test_RFC3339ToQuarter(t *testing.T) {
 	cases := []struct {
 		in   string
 		want string
@@ -46,7 +46,7 @@ func Test_RFC3339_to_Quarter(t *testing.T) {
 		want: "2019Q4",
 	}}
 	for _, c := range cases {
-		got, err := RFC3339_to_Quarter(c.in)
+		got, err := RFC3339ToQuarter(c.in)
 		// check err
 		if err != nil {
 			t.Fatalf("%v", err.Error())
@@ -100,7 +100,7 @@ func Test_RFC3339_to_ShortQuarter(t *testing.T) {
 		want: "4Q19",
 	}}
 	for _, c := range cases {
-		got, err := RFC3339_to_ShortQuarter(c.in)
+		got, err := RFC3339ToShortQuarter(c.in)
 		// check err
 		if err != nil {
 			t.Fatalf("%v", err.Error())

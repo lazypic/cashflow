@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
-	"os"
 )
 
 func main() {
@@ -30,12 +31,12 @@ func main() {
 			if aerr, ok := err.(awserr.Error); ok {
 				switch aerr.Code() {
 				case dynamodb.ErrCodeInternalServerError:
-					fmt.Println(dynamodb.ErrCodeInternalServerError, aerr.Error())
+					fmt.Fprintf(os.Stderr, "%s %s\n", dynamodb.ErrCodeInternalServerError, err.Error())
 				default:
-					fmt.Println(aerr.Error())
+					fmt.Fprintf(os.Stderr, "%s\n", aerr.Error())
 				}
 			} else {
-				fmt.Println(err.Error())
+				fmt.Fprintf(os.Stderr, "%s\n", err.Error())
 			}
 			return
 		}
@@ -79,19 +80,19 @@ func main() {
 		Project:             "project name",
 		Description:         "description",
 	}
-	dynamodbJson, err := dynamodbattribute.MarshalMap(item)
+	dynamodbJSON, err := dynamodbattribute.MarshalMap(item)
 	if err != nil {
-		fmt.Println(err.Error())
+		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
 		os.Exit(1)
 	}
 
 	data := &dynamodb.PutItemInput{
-		Item:      dynamodbJson,
+		Item:      dynamodbJSON,
 		TableName: aws.String(tableName),
 	}
 	_, err = svc.PutItem(data)
 	if err != nil {
-		fmt.Println(err.Error())
+		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
 		os.Exit(1)
 	}
 	fmt.Printf("Successfully added %v\n", item)
