@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 )
@@ -18,6 +20,19 @@ type Item struct {
 	Recipient           string // 받는이
 	Project             string // 관련 프로젝트명
 	Description         string // 설명
+}
+
+// Print 메소드는 Item 자료구조를 보기좋게 출력한다.
+func (i *Item) Print() {
+	fmt.Println("Quarter:", i.Quarter)
+	fmt.Println("Deposit Date:", i.DepositDate)
+	fmt.Println("Deposit Amount:", i.MonetaryUnit, i.DepositAmount)
+	fmt.Println("Actual Deposit Date:", i.ActualDepositDate)
+	fmt.Println("Actual Deposit Amount:", i.MonetaryUnit, i.ActualDepositAmount)
+	fmt.Println("Type:", i.Typ)
+	fmt.Printf("%s -> %s\n", i.Sender, i.Recipient)
+	fmt.Println("Project:", i.Project)
+	fmt.Println("Description:", i.Description)
 }
 
 func tableStruct(tableName string) *dynamodb.CreateTableInput {

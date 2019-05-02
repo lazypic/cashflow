@@ -13,31 +13,33 @@ import (
 )
 
 func main() {
-	// 인수를 받아서 정상인지 체크한다.
+	// 인수처리부
 	now := time.Now().Format(time.RFC3339)
 	regionPtr := flag.String("region", "ap-northeast-2", "aws region name")
 	profilePtr := flag.String("profile", "lazypic", "aws credentials profile name")
 	tablePtr := flag.String("table", "cashflow_demo", "aws dynamodb table name")
 	datePtr := flag.String("date", now, "deposit date")
-	amountPtr := flag.Int64("amount", 0, "deposit amount")
+	amountPtr := flag.Int64("amount", 0, "deposit amount (Required)")
 	recipientPtr := flag.String("recipient", "lazypic", "recipient")
 	projectPtr := flag.String("project", "none", "project name")
 	descriptionPtr := flag.String("description", "none", "description")
 	unitPtr := flag.String("unit", "KRW", "mometary unit")
-	senderPtr := flag.String("sender", "", "sender (Required value)")
-	typePtr := flag.String("type", "profit", "type name: donation, investment, profit(일시수익), contract(계약금), interim(중도금), balance(잔금), addon(추가금)")
+	senderPtr := flag.String("sender", "", "sender (Required)")
+	typePtr := flag.String("type", "donation", "type name: donation, investment, profit(일시수익), contract(계약금), interim(중도금), balance(잔금), addon(추가금)")
 	actualDatePtr := flag.String("actualdate", now, "actual deposit date")
 	actualAmountPtr := flag.Int64("actualamount", 0, "actual deposit amount")
-
 	helpPtr := flag.Bool("help", false, "print help")
 	flag.Parse()
-	if *senderPtr == "" || *amountPtr == 0 || *helpPtr {
+	if *helpPtr {
 		flag.PrintDefaults()
 		os.Exit(0)
 	}
-	fmt.Println(*datePtr)
-	fmt.Println(*amountPtr)
-	fmt.Println(*recipientPtr)
+	if *senderPtr == "" || *amountPtr == 0 {
+		// 분기별 데이터 가지고 오기
+		// 분기별 보고 출력하기.
+		fmt.Println("drawing chart")
+		os.Exit(0)
+	}
 
 	sess := session.Must(session.NewSessionWithOptions(session.Options{
 		SharedConfigState: session.SharedConfigEnable,
@@ -92,7 +94,6 @@ func main() {
 		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
 		os.Exit(1)
 	}
-	fmt.Printf("Successfully added %v\n", item)
-	// 분기별 데이터 가지고 오기
-	// 분기별 보고 출력하기.
+	fmt.Println("add item")
+	item.Print()
 }
