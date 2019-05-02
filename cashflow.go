@@ -61,6 +61,8 @@ func main() {
 			os.Exit(1)
 		}
 		fmt.Println("Created the table", *tablePtr)
+		fmt.Println("Please re-enter the data after one minute.")
+		os.Exit(0)
 	}
 	// 아이템 추가하기.
 	q, err := RFC3339ToQuarter(*datePtr)
