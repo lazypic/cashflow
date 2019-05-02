@@ -8,7 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 )
 
-func isTableName(svc dynamodb.DynamoDB, tablename string) bool {
+func isTableName(svc dynamodb.DynamoDB, tableName string) bool {
 	input := &dynamodb.ListTablesInput{}
 	isTableName := false
 	// 한번에 최대 100개의 테이블만 가지고 올 수 있다.

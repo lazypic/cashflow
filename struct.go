@@ -5,7 +5,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 )
 
-// Item 은 cashflow에서 사용되는 자료구조입니다.
+// Item 은 cashflow에서 사용되는 자료구조이다.
 type Item struct {
 	Quarter             string // 분기 2019Q1 : Partition Key
 	DepositDate         string // 예정일 2019-04-11T18:26:00+09:00  : SortKey
