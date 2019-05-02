@@ -92,6 +92,7 @@ func main() {
 		fmt.Println("2Q19")
 		fmt.Println(amount)
 
+		// 분기출력
 		for y := now.Year() - 1; y <= now.Year()+2; y++ {
 			for q := 1; q <= 4; q++ {
 				partition := fmt.Sprintf("%dQ%d", y, q)
