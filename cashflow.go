@@ -33,7 +33,15 @@ func main() {
 	flag.Parse()
 	if !currency.Valid(*unitPtr) {
 		fmt.Fprintf(os.Stderr, "%s string is not ISO4217 format", *unitPtr)
-		os.Exit(0)
+		os.Exit(1)
+	}
+	if !rfc3339.MatchString(*datePtr) {
+		fmt.Fprintf(os.Stderr, "%s string is not RFC3339 format", *datePtr)
+		os.Exit(1)
+	}
+	if !rfc3339.MatchString(*actualDatePtr) {
+		fmt.Fprintf(os.Stderr, "%s string is not RFC3339 format", *actualDatePtr)
+		os.Exit(1)
 	}
 	if *helpPtr {
 		flag.PrintDefaults()
