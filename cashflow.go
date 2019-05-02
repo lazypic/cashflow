@@ -49,7 +49,7 @@ func main() {
 	svc := dynamodb.New(sess)
 
 	// 테이블이 존재하는지 점검하고 없다면 테이블을 생성한다.
-	if !isTableName(*svc, *tablePtr) {
+	if !validTable(*svc, *tablePtr) {
 		_, err := svc.CreateTable(tableStruct(*tablePtr))
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
