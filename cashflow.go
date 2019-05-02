@@ -10,6 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
+	"github.com/ladydascalie/currency"
 )
 
 func main() {
@@ -30,6 +31,10 @@ func main() {
 	actualAmountPtr := flag.Int64("actualamount", 0, "actual deposit amount")
 	helpPtr := flag.Bool("help", false, "print help")
 	flag.Parse()
+	if !currency.Valid(*unitPtr) {
+		fmt.Fprintf(os.Stderr, "%s string is not ISO4217 format", *unitPtr)
+		os.Exit(0)
+	}
 	if *helpPtr {
 		flag.PrintDefaults()
 		os.Exit(0)
