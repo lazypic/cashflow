@@ -51,11 +51,11 @@ func main() {
 		Config:            aws.Config{Region: aws.String(*regionPtr)},
 		Profile:           *profilePtr,
 	}))
-	svc := dynamodb.New(sess)
+	db := dynamodb.New(sess)
 
 	// 테이블이 존재하는지 점검하고 없다면 테이블을 생성한다.
-	if !validTable(*svc, *tablePtr) {
-		_, err := svc.CreateTable(tableStruct(*tablePtr))
+	if !validTable(*db, *tablePtr) {
+		_, err := db.CreateTable(tableStruct(*tablePtr))
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			os.Exit(1)
@@ -96,7 +96,7 @@ func main() {
 		Item:      dynamodbJSON,
 		TableName: aws.String(*tablePtr),
 	}
-	_, err = svc.PutItem(data)
+	_, err = db.PutItem(data)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
 		os.Exit(1)
