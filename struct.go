@@ -22,19 +22,21 @@ type Item struct {
 	Description         string // 설명
 }
 
+// Quarter 는 분기하나의 자료구조이다.
 type Quarter struct {
 	Name string
-	In int64
-	Out int64
+	In   int64
+	Out  int64
 }
 
+// QuarterlyReport 는 분기별 연간 자료구조이다.
 type QuarterlyReport struct {
 	Year int
-	Q1 Quarter
-	Q2 Quarter
-	Q3 Quarter
-	Q4 Quarter
-	QT Quarter
+	Q1   Quarter
+	Q2   Quarter
+	Q3   Quarter
+	Q4   Quarter
+	QT   Quarter
 }
 
 // Print 메소드는 Item 자료구조를 보기좋게 출력한다.

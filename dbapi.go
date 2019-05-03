@@ -56,7 +56,7 @@ func QuarterInfo(db dynamodb.DynamoDB, tableName string, quarter string) (int64,
 	var in int64
 	var out int64
 
-	filt := expression.Name("Quarter").Equal(expression.Value("2019Q2"))
+	filt := expression.Name("Quarter").Equal(expression.Value(quarter))
 	proj := expression.NamesList(expression.Name("DepositAmount"), expression.Name("Sender"))
 	expr, err := expression.NewBuilder().WithFilter(filt).WithProjection(proj).Build()
 	if err != nil {

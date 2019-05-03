@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -57,56 +58,20 @@ func main() {
 	db := dynamodb.New(sess)
 
 	if *senderPtr == "" || *amountPtr == 0 {
-		// 분기별 데이터 가지고 와서 출력하기
-		in, out, err := QuarterInfo(*db, *tablePtr, "2019Q2")
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
-		}
-		fmt.Println("2019Q2", in, out)
 
 		// 분기출력
 		for y := now.Year() - 1; y <= now.Year()+2; y++ {
 			for q := 1; q <= 4; q++ {
-				partition := fmt.Sprintf("%dQ%d", y, q)
-				fmt.Printf(partition)
-				fmt.Printf(" ")
+				partitionKey := fmt.Sprintf("%dQ%d", y, q)
+				// 분기별 데이터 가지고 와서 출력하기
+				in, out, err := QuarterInfo(*db, *tablePtr, partitionKey)
+				if err != nil {
+					fmt.Fprintf(os.Stderr, "%v\n", err)
+				}
+				fmt.Println(partitionKey, in, out)
 			}
 			fmt.Printf("%dQT\n", y)
 		}
-
-		// 테이블 그리기
-		data := [][]string{
-			[]string{"in", "1", "1", "1", "1", "4"},
-			[]string{"out", "1", "1", "0", "0", "2"},
-		}
-		table := tablewriter.NewWriter(os.Stdout)
-		table.SetHeader([]string{"", "1Q19", "2Q19", "3Q19", "4Q19", "TQ19"})
-		for _, v := range data {
-			table.Append(v)
-		}
-		table.Render() // Send output
-
-		data = [][]string{
-			[]string{"in", "1", "1", "1", "1", "4"},
-			[]string{"out", "1", "1", "0", "0", "2"},
-		}
-		table = tablewriter.NewWriter(os.Stdout)
-		table.SetHeader([]string{"", "1Q20", "2Q20", "3Q20", "4Q20", "TQ20"})
-		for _, v := range data {
-			table.Append(v)
-		}
-		table.Render() // Send output
-
-		data = [][]string{
-			[]string{"in", "1", "1", "1", "1", "4"},
-			[]string{"out", "1", "1", "0", "0", "2"},
-		}
-		table = tablewriter.NewWriter(os.Stdout)
-		table.SetHeader([]string{"", "2021Q1", "2021Q2", "2021Q3", "2021Q4", "2021QT"})
-		for _, v := range data {
-			table.Append(v)
-		}
-		table.Render() // Send output
 
 		testy := QuarterlyReport{}
 		testy.Year = 2019
@@ -114,6 +79,35 @@ func main() {
 		testy.Q1.In = 100
 		testy.Q1.Out = 100
 		fmt.Println(testy)
+
+		// 테이블 그리기
+		data := [][]string{
+			[]string{"in",
+				strconv.FormatInt(testy.Q1.In, 10),
+				strconv.FormatInt(testy.Q2.In, 10),
+				strconv.FormatInt(testy.Q3.In, 10),
+				strconv.FormatInt(testy.Q4.In, 10),
+				strconv.FormatInt(testy.QT.In, 10)},
+			[]string{"out",
+				strconv.FormatInt(testy.Q1.Out, 10),
+				strconv.FormatInt(testy.Q2.Out, 10),
+				strconv.FormatInt(testy.Q3.Out, 10),
+				strconv.FormatInt(testy.Q4.Out, 10),
+				strconv.FormatInt(testy.QT.Out, 10)},
+		}
+		table := tablewriter.NewWriter(os.Stdout)
+		table.SetHeader([]string{"",
+			testy.Q1.Name,
+			testy.Q2.Name,
+			testy.Q3.Name,
+			testy.Q4.Name,
+			testy.QT.Name},
+		)
+		for _, v := range data {
+			table.Append(v)
+		}
+		table.Render() // Send output
+
 		os.Exit(0)
 	}
 
