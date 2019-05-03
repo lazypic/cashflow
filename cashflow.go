@@ -107,6 +107,13 @@ func main() {
 			table.Append(v)
 		}
 		table.Render() // Send output
+
+		testy := QuarterlyReport{}
+		testy.Year = 2019
+		testy.Q1.Name = "2019Q1"
+		testy.Q1.In = 100
+		testy.Q1.Out = 100
+		fmt.Println(testy)
 		os.Exit(0)
 	}
 
