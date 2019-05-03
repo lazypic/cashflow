@@ -58,7 +58,7 @@ func main() {
 	db := dynamodb.New(sess)
 
 	if *senderPtr == "" || *amountPtr == 0 {
-		// 분기출력
+		// 입력조건이 아닐 때는 기본적인 연도 및 분기별 정보를 출력한다.
 		for y := now.Year() - 1; y <= now.Year()+2; y++ {
 			qr := QuarterlyReport{}
 			qr.Year = y
@@ -67,7 +67,7 @@ func main() {
 			for q := 1; q <= 4; q++ {
 				partitionKey := fmt.Sprintf("%dQ%d", y, q)
 				// 분기별 데이터 가지고 와서 출력하기
-				in, out, err := QuarterInfo(*db, *tablePtr, partitionKey)
+				in, out, err := GetQuarter(*db, *tablePtr, partitionKey)
 				if err != nil {
 					fmt.Fprintf(os.Stderr, "%v\n", err)
 				}
@@ -123,7 +123,6 @@ func main() {
 			}
 			table.Render() // Send output
 		}
-
 		os.Exit(0)
 	}
 
@@ -134,7 +133,7 @@ func main() {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			os.Exit(1)
 		}
-		fmt.Println("Created the table", *tablePtr)
+		fmt.Println("Created the table:", *tablePtr)
 		fmt.Println("Please re-enter the data after one minute.")
 		os.Exit(0)
 	}
