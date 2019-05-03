@@ -58,9 +58,12 @@ func main() {
 	db := dynamodb.New(sess)
 
 	if *senderPtr == "" || *amountPtr == 0 {
-
 		// 분기출력
 		for y := now.Year() - 1; y <= now.Year()+2; y++ {
+			testy := QuarterlyReport{}
+			testy.Year = y
+			var totalIn int64
+			var totalOut int64
 			for q := 1; q <= 4; q++ {
 				partitionKey := fmt.Sprintf("%dQ%d", y, q)
 				// 분기별 데이터 가지고 와서 출력하기
@@ -68,45 +71,64 @@ func main() {
 				if err != nil {
 					fmt.Fprintf(os.Stderr, "%v\n", err)
 				}
-				fmt.Println(partitionKey, in, out)
+				switch q {
+				case 1:
+					testy.Q1.Name = partitionKey
+					testy.Q1.In = in
+					testy.Q1.Out = out
+					totalIn += in
+					totalOut += out
+				case 2:
+					testy.Q2.Name = partitionKey
+					testy.Q2.In = in
+					testy.Q2.Out = out
+					totalIn += in
+					totalOut += out
+				case 3:
+					testy.Q3.Name = partitionKey
+					testy.Q3.In = in
+					testy.Q3.Out = out
+					totalIn += in
+					totalOut += out
+				case 4:
+					testy.Q4.Name = partitionKey
+					testy.Q4.In = in
+					testy.Q4.Out = out
+					totalIn += in
+					totalOut += out
+				}
 			}
-			fmt.Printf("%dQT\n", y)
+			testy.QT.Name = fmt.Sprintf("%dQT", y)
+			testy.QT.In = totalIn
+			testy.QT.Out = totalOut
+			// 테이블 그리기
+			data := [][]string{
+				[]string{"in",
+					strconv.FormatInt(testy.Q1.In, 10),
+					strconv.FormatInt(testy.Q2.In, 10),
+					strconv.FormatInt(testy.Q3.In, 10),
+					strconv.FormatInt(testy.Q4.In, 10),
+					strconv.FormatInt(testy.QT.In, 10)},
+				[]string{"out",
+					strconv.FormatInt(testy.Q1.Out, 10),
+					strconv.FormatInt(testy.Q2.Out, 10),
+					strconv.FormatInt(testy.Q3.Out, 10),
+					strconv.FormatInt(testy.Q4.Out, 10),
+					strconv.FormatInt(testy.QT.Out, 10)},
+			}
+			table := tablewriter.NewWriter(os.Stdout)
+			table.SetHeader([]string{"",
+				testy.Q1.Name,
+				testy.Q2.Name,
+				testy.Q3.Name,
+				testy.Q4.Name,
+				testy.QT.Name},
+			)
+			for _, v := range data {
+				table.Append(v)
+			}
+			table.Render() // Send output
 		}
-
-		testy := QuarterlyReport{}
-		testy.Year = 2019
-		testy.Q1.Name = "2019Q1"
-		testy.Q1.In = 100
-		testy.Q1.Out = 100
-		fmt.Println(testy)
-
-		// 테이블 그리기
-		data := [][]string{
-			[]string{"in",
-				strconv.FormatInt(testy.Q1.In, 10),
-				strconv.FormatInt(testy.Q2.In, 10),
-				strconv.FormatInt(testy.Q3.In, 10),
-				strconv.FormatInt(testy.Q4.In, 10),
-				strconv.FormatInt(testy.QT.In, 10)},
-			[]string{"out",
-				strconv.FormatInt(testy.Q1.Out, 10),
-				strconv.FormatInt(testy.Q2.Out, 10),
-				strconv.FormatInt(testy.Q3.Out, 10),
-				strconv.FormatInt(testy.Q4.Out, 10),
-				strconv.FormatInt(testy.QT.Out, 10)},
-		}
-		table := tablewriter.NewWriter(os.Stdout)
-		table.SetHeader([]string{"",
-			testy.Q1.Name,
-			testy.Q2.Name,
-			testy.Q3.Name,
-			testy.Q4.Name,
-			testy.QT.Name},
-		)
-		for _, v := range data {
-			table.Append(v)
-		}
-		table.Render() // Send output
 
 		os.Exit(0)
 	}
