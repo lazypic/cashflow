@@ -10,8 +10,8 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
-	"github.com/aws/aws-sdk-go/service/dynamodb/expression"
 	"github.com/ladydascalie/currency"
+	"github.com/olekukonko/tablewriter"
 )
 
 func main() {
@@ -58,39 +58,11 @@ func main() {
 
 	if *senderPtr == "" || *amountPtr == 0 {
 		// 분기별 데이터 가지고 와서 출력하기
-		filt := expression.Name("Quarter").Equal(expression.Value("2019Q2"))
-		proj := expression.NamesList(expression.Name("DepositAmount"))
-		expr, err := expression.NewBuilder().WithFilter(filt).WithProjection(proj).Build()
+		in, out, err := QuarterInfo(*db, *tablePtr, "2019Q2")
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
-			os.Exit(1)
 		}
-		params := &dynamodb.ScanInput{
-			ExpressionAttributeNames:  expr.Names(),
-			ExpressionAttributeValues: expr.Values(),
-			FilterExpression:          expr.Filter(),
-			ProjectionExpression:      expr.Projection(),
-			TableName:                 aws.String(*tablePtr),
-		}
-		result, err := db.Scan(params)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
-			os.Exit(1)
-		}
-
-		var amount int64
-		for _, i := range result.Items {
-			item := Item{}
-
-			err = dynamodbattribute.UnmarshalMap(i, &item)
-			if err != nil {
-				fmt.Fprintf(os.Stderr, "%v\n", err)
-				os.Exit(1)
-			}
-			amount += item.DepositAmount
-		}
-		fmt.Println("2Q19")
-		fmt.Println(amount)
+		fmt.Println("2019Q2", in, out)
 
 		// 분기출력
 		for y := now.Year() - 1; y <= now.Year()+2; y++ {
@@ -101,6 +73,40 @@ func main() {
 			}
 			fmt.Printf("%dQT\n", y)
 		}
+
+		// 테이블 그리기
+		data := [][]string{
+			[]string{"in", "1", "1", "1", "1", "4"},
+			[]string{"out", "1", "1", "0", "0", "2"},
+		}
+		table := tablewriter.NewWriter(os.Stdout)
+		table.SetHeader([]string{"", "1Q19", "2Q19", "3Q19", "4Q19", "TQ19"})
+		for _, v := range data {
+			table.Append(v)
+		}
+		table.Render() // Send output
+
+		data = [][]string{
+			[]string{"in", "1", "1", "1", "1", "4"},
+			[]string{"out", "1", "1", "0", "0", "2"},
+		}
+		table = tablewriter.NewWriter(os.Stdout)
+		table.SetHeader([]string{"", "1Q20", "2Q20", "3Q20", "4Q20", "TQ20"})
+		for _, v := range data {
+			table.Append(v)
+		}
+		table.Render() // Send output
+
+		data = [][]string{
+			[]string{"in", "1", "1", "1", "1", "4"},
+			[]string{"out", "1", "1", "0", "0", "2"},
+		}
+		table = tablewriter.NewWriter(os.Stdout)
+		table.SetHeader([]string{"", "2021Q1", "2021Q2", "2021Q3", "2021Q4", "2021QT"})
+		for _, v := range data {
+			table.Append(v)
+		}
+		table.Render() // Send output
 		os.Exit(0)
 	}
 

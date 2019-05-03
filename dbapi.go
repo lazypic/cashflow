@@ -4,8 +4,11 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
+	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
+	"github.com/aws/aws-sdk-go/service/dynamodb/expression"
 )
 
 func validTable(db dynamodb.DynamoDB, tableName string) bool {
@@ -46,4 +49,42 @@ func validTable(db dynamodb.DynamoDB, tableName string) bool {
 		}
 	}
 	return isTableName
+}
+
+// QuarterInfo 함수는 "2019Q1" 형태의 문자를 입력받아서 수입,지출 정보를 가지고 온다.
+func QuarterInfo(db dynamodb.DynamoDB, tableName string, quarter string) (int64, int64, error) {
+	var in int64
+	var out int64
+
+	filt := expression.Name("Quarter").Equal(expression.Value("2019Q2"))
+	proj := expression.NamesList(expression.Name("DepositAmount"), expression.Name("Sender"))
+	expr, err := expression.NewBuilder().WithFilter(filt).WithProjection(proj).Build()
+	if err != nil {
+		return in, out, err
+	}
+	params := &dynamodb.ScanInput{
+		ExpressionAttributeNames:  expr.Names(),
+		ExpressionAttributeValues: expr.Values(),
+		FilterExpression:          expr.Filter(),
+		ProjectionExpression:      expr.Projection(),
+		TableName:                 aws.String(tableName),
+	}
+	result, err := db.Scan(params)
+	if err != nil {
+		return in, out, err
+	}
+
+	for _, i := range result.Items {
+		item := Item{}
+
+		err = dynamodbattribute.UnmarshalMap(i, &item)
+		if err != nil {
+			return in, out, err
+		}
+		if item.Sender == "lazypic" {
+			out += item.DepositAmount
+		}
+		in += item.DepositAmount
+	}
+	return in, out, err
 }
