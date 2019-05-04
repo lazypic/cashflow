@@ -62,14 +62,14 @@ func main() {
 			qr.Year = y
 			var totalIn int64
 			var totalOut int64
-			for q := 1; q <= 4; q++ {
-				partitionKey := fmt.Sprintf("%dQ%d", y, q)
+			for n := 1; n <= 4; n++ {
+				partitionKey := fmt.Sprintf("%dQ%d", y, n)
 				// 분기별 데이터 가지고 와서 출력하기
 				in, out, err := GetQuarter(*db, *tablePtr, partitionKey)
 				if err != nil {
 					fmt.Fprintf(os.Stderr, "%v\n", err)
 				}
-				switch q {
+				switch n {
 				case 1:
 					qr.Q1.Name = partitionKey
 					qr.Q1.In = in
