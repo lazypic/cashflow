@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"strconv"
 
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/service/dynamodb"
+	"github.com/olekukonko/tablewriter"
 )
 
 // Item 은 cashflow에서 사용되는 자료구조이다.
@@ -52,29 +53,33 @@ func (i *Item) Print() {
 	fmt.Println("Description:", i.Description)
 }
 
-func tableStruct(tableName string) *dynamodb.CreateTableInput {
-	return &dynamodb.CreateTableInput{
-		AttributeDefinitions: []*dynamodb.AttributeDefinition{
-			{
-				AttributeName: aws.String("Quarter"),
-				AttributeType: aws.String("S"),
-			},
-			{
-				AttributeName: aws.String("DepositDate"),
-				AttributeType: aws.String("S"),
-			},
-		},
-		KeySchema: []*dynamodb.KeySchemaElement{
-			{
-				AttributeName: aws.String("Quarter"),
-				KeyType:       aws.String("HASH"),
-			},
-			{
-				AttributeName: aws.String("DepositDate"),
-				KeyType:       aws.String("RANGE"),
-			},
-		},
-		BillingMode: aws.String(dynamodb.BillingModePayPerRequest), // ondemand
-		TableName:   aws.String(tableName),
+// Print 메소드는 QuarterlyReport 자료구조를 표로 출력한다.
+func (qr *QuarterlyReport) Print() {
+	// 테이블 그리기
+	data := [][]string{
+		[]string{"in",
+			strconv.FormatInt(qr.Q1.In, 10),
+			strconv.FormatInt(qr.Q2.In, 10),
+			strconv.FormatInt(qr.Q3.In, 10),
+			strconv.FormatInt(qr.Q4.In, 10),
+			strconv.FormatInt(qr.QT.In, 10)},
+		[]string{"out",
+			strconv.FormatInt(qr.Q1.Out, 10),
+			strconv.FormatInt(qr.Q2.Out, 10),
+			strconv.FormatInt(qr.Q3.Out, 10),
+			strconv.FormatInt(qr.Q4.Out, 10),
+			strconv.FormatInt(qr.QT.Out, 10)},
 	}
+	table := tablewriter.NewWriter(os.Stdout)
+	table.SetHeader([]string{"",
+		qr.Q1.Name,
+		qr.Q2.Name,
+		qr.Q3.Name,
+		qr.Q4.Name,
+		qr.QT.Name},
+	)
+	for _, v := range data {
+		table.Append(v)
+	}
+	table.Render() // Send output
 }

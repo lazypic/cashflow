@@ -11,6 +11,33 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb/expression"
 )
 
+func tableStruct(tableName string) *dynamodb.CreateTableInput {
+	return &dynamodb.CreateTableInput{
+		AttributeDefinitions: []*dynamodb.AttributeDefinition{
+			{
+				AttributeName: aws.String("Quarter"),
+				AttributeType: aws.String("S"),
+			},
+			{
+				AttributeName: aws.String("DepositDate"),
+				AttributeType: aws.String("S"),
+			},
+		},
+		KeySchema: []*dynamodb.KeySchemaElement{
+			{
+				AttributeName: aws.String("Quarter"),
+				KeyType:       aws.String("HASH"),
+			},
+			{
+				AttributeName: aws.String("DepositDate"),
+				KeyType:       aws.String("RANGE"),
+			},
+		},
+		BillingMode: aws.String(dynamodb.BillingModePayPerRequest), // ondemand
+		TableName:   aws.String(tableName),
+	}
+}
+
 func validTable(db dynamodb.DynamoDB, tableName string) bool {
 	input := &dynamodb.ListTablesInput{}
 	isTableName := false

@@ -4,7 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"strconv"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -12,7 +11,6 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 	"github.com/ladydascalie/currency"
-	"github.com/olekukonko/tablewriter"
 )
 
 func main() {
@@ -95,33 +93,7 @@ func main() {
 			qr.QT.Name = fmt.Sprintf("%dQT", y)
 			qr.QT.In = totalIn
 			qr.QT.Out = totalOut
-			// 테이블 그리기
-			data := [][]string{
-				[]string{"in",
-					strconv.FormatInt(qr.Q1.In, 10),
-					strconv.FormatInt(qr.Q2.In, 10),
-					strconv.FormatInt(qr.Q3.In, 10),
-					strconv.FormatInt(qr.Q4.In, 10),
-					strconv.FormatInt(qr.QT.In, 10)},
-				[]string{"out",
-					strconv.FormatInt(qr.Q1.Out, 10),
-					strconv.FormatInt(qr.Q2.Out, 10),
-					strconv.FormatInt(qr.Q3.Out, 10),
-					strconv.FormatInt(qr.Q4.Out, 10),
-					strconv.FormatInt(qr.QT.Out, 10)},
-			}
-			table := tablewriter.NewWriter(os.Stdout)
-			table.SetHeader([]string{"",
-				qr.Q1.Name,
-				qr.Q2.Name,
-				qr.Q3.Name,
-				qr.Q4.Name,
-				qr.QT.Name},
-			)
-			for _, v := range data {
-				table.Append(v)
-			}
-			table.Render() // Send output
+			qr.Print()
 		}
 		os.Exit(0)
 	}
