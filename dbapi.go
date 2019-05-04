@@ -132,13 +132,13 @@ func hasItem(db dynamodb.DynamoDB, tableName string, primarykey string, sortkey 
 		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
 		return false
 	}
-	existsItem := Item{}
-	err = dynamodbattribute.UnmarshalMap(result.Item, &existsItem)
+	item := Item{}
+	err = dynamodbattribute.UnmarshalMap(result.Item, &item)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
 		return false
 	}
-	if existsItem.DepositDate == "" {
+	if item.DepositDate == "" {
 		return false
 	}
 	return true
