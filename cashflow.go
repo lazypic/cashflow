@@ -20,7 +20,7 @@ func main() {
 	profilePtr := flag.String("profile", "lazypic", "aws credentials profile name")
 	tablePtr := flag.String("table", "cashflow_demo", "aws dynamodb table name")
 	datePtr := flag.String("date", now.Format(time.RFC3339), "deposit date")
-	amountPtr := flag.Int64("amount", 0, "deposit amount (Required)")
+	amountPtr := flag.Float64("amount", 0, "deposit amount (Required)")
 	recipientPtr := flag.String("recipient", "lazypic", "recipient")
 	projectPtr := flag.String("project", "none", "project name")
 	descriptionPtr := flag.String("description", "none", "description")
@@ -28,7 +28,7 @@ func main() {
 	senderPtr := flag.String("sender", "", "sender (Required)")
 	typePtr := flag.String("type", "donation", "type name: donation, investment, profit(일시수익), contract(계약금), interim(중도금), balance(잔금), addon(추가금)")
 	actualDatePtr := flag.String("actualdate", now.Format(time.RFC3339), "actual deposit date")
-	actualAmountPtr := flag.Int64("actualamount", 0, "actual deposit amount")
+	actualAmountPtr := flag.Float64("actualamount", 0, "actual deposit amount")
 	helpPtr := flag.Bool("help", false, "print help")
 	flag.Parse()
 	if !currency.Valid(*unitPtr) {
@@ -60,8 +60,8 @@ func main() {
 		for y := now.Year() - 1; y <= now.Year()+2; y++ {
 			qr := QuarterlyReport{}
 			qr.Year = y
-			var totalIn int64
-			var totalOut int64
+			var totalIn float64
+			var totalOut float64
 			for n := 1; n <= 4; n++ {
 				partitionKey := fmt.Sprintf("%dQ%d", y, n)
 				// 분기별 데이터 가지고 와서 출력하기

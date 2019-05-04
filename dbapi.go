@@ -79,9 +79,9 @@ func validTable(db dynamodb.DynamoDB, tableName string) bool {
 }
 
 // GetQuarter 함수는 "2019Q1" 형태의 문자를 입력받아서 수입,지출 정보를 가지고 온다.
-func GetQuarter(db dynamodb.DynamoDB, tableName string, quarter string) (int64, int64, error) {
-	var in int64
-	var out int64
+func GetQuarter(db dynamodb.DynamoDB, tableName string, quarter string) (float64, float64, error) {
+	var in float64
+	var out float64
 
 	filt := expression.Name("Quarter").Equal(expression.Value(quarter))
 	proj := expression.NamesList(expression.Name("DepositAmount"), expression.Name("Sender"))
