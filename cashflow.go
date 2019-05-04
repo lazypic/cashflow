@@ -110,7 +110,7 @@ func main() {
 		os.Exit(0)
 	}
 	// 아이템 추가하기.
-	q, err := RFC3339ToQuarter(*datePtr)
+	primaryKey, err := RFC3339ToQuarter(*datePtr)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 	}
@@ -119,7 +119,7 @@ func main() {
 	}
 
 	item := Item{
-		Quarter:             q,
+		Quarter:             primaryKey,
 		DepositDate:         *datePtr,
 		DepositAmount:       *amountPtr,
 		ActualDepositDate:   *actualDatePtr,
@@ -131,6 +131,13 @@ func main() {
 		Project:             *projectPtr,
 		Description:         *descriptionPtr,
 	}
+	// 데이터가 존재하는지 체크
+	if hasItem(*db, *tablePtr, primaryKey, *datePtr) {
+		fmt.Println("The data already exists. Can not add data.")
+		os.Exit(0)
+	}
+
+	// 데이터 저장
 	dynamodbJSON, err := dynamodbattribute.MarshalMap(item)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%s\n", err.Error())

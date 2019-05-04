@@ -115,3 +115,31 @@ func GetQuarter(db dynamodb.DynamoDB, tableName string, quarter string) (int64, 
 	}
 	return in, out, err
 }
+
+func hasItem(db dynamodb.DynamoDB, tableName string, primarykey string, sortkey string) bool {
+	result, err := db.GetItem(&dynamodb.GetItemInput{
+		TableName: aws.String(tableName),
+		Key: map[string]*dynamodb.AttributeValue{
+			"Quarter": {
+				S: aws.String(primarykey),
+			},
+			"DepositDate": {
+				S: aws.String(sortkey),
+			},
+		},
+	})
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
+		return false
+	}
+	existsItem := Item{}
+	err = dynamodbattribute.UnmarshalMap(result.Item, &existsItem)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
+		return false
+	}
+	if existsItem.DepositDate == "" {
+		return false
+	}
+	return true
+}
