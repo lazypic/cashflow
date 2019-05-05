@@ -29,6 +29,7 @@ func main() {
 	typePtr := flag.String("type", "donation", "type name: donation, investment, profit(일시수익), contract(계약금), interim(중도금), balance(잔금), addon(추가금)")
 	actualDatePtr := flag.String("actualdate", now.Format(time.RFC3339), "actual deposit date")
 	actualAmountPtr := flag.Float64("actualamount", 0, "actual deposit amount")
+	receivablesPtr := flag.Bool("receivables", false, "recivables status")
 	helpPtr := flag.Bool("help", false, "print help")
 	flag.Parse()
 	if !currency.Valid(*unitPtr) {
@@ -130,6 +131,7 @@ func main() {
 		Recipient:           *recipientPtr,
 		Project:             *projectPtr,
 		Description:         *descriptionPtr,
+		Receivables:         *receivablesPtr,
 	}
 	// 데이터가 존재하는지 체크
 	if hasItem(*db, *tablePtr, primaryKey, *datePtr) {

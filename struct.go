@@ -14,12 +14,13 @@ type Item struct {
 	DepositAmount       float64 // 입금금액
 	ActualDepositDate   string  // 실입금일
 	ActualDepositAmount float64 // 실입금금액
-	Typ                 string  // 종류 donation(기부), investment(콘텐츠투자), profit(일시적수익), 계약금(contract),중도금(interim), 잔금(balance), 추가금(addon)
+	Typ                 string  // 종류 donation(기부), investment(콘텐츠투자), profit(일시적수익), 계약금(contract), 중도금(interim), 잔금(balance), 추가금(addon)
 	MonetaryUnit        string  // 단위 : KRW,USD,CNY,JPY,VND / policy : ISO4217
 	Sender              string  // 보내는이
 	Recipient           string  // 받는이
 	Project             string  // 관련 프로젝트명
 	Description         string  // 설명
+	Receivables         bool    // 미수금
 }
 
 // Quarter 는 분기하나의 자료구조이다.
