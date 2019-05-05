@@ -98,3 +98,5 @@ dynamoDB는 Full managed DB입니다. 지속 백업기능을 켜서 사용합니
     - projectflow : 프로젝트 비용과 관련된 리스트
 	- assetflow : 회사 에셋(장비, 하드웨어, 소프트웨어) 비용과 관련된 리스트
 	- userflow : 사용자에게 지출되는 비용과 관련된 리스트
+
+### 라이센스 : BSD-3-Clause
