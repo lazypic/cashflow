@@ -91,6 +91,9 @@ $ cashflow --sender 클라이언트 --amount 1000000 --type contract --project c
 ### 백업
 dynamoDB는 Full managed DB입니다. 지속 백업기능을 켜서 사용합니다.
 
+### 다국적협업
+dynamoDB에서 Global Table을 활성화 시킵니다.
+
 ### Software Features
 - AWS Serverless를 사용하는 소프트웨어 입니다.
 - 1초에 2회 이상 거래가 이용되는 형태로 설계되어있지 않습니다. 하루 최대 86400건의 거래만 저장될 수 있다는 의미 입니다.
