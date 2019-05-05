@@ -9,6 +9,11 @@
 - [macOS 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.1/cashflow_darwin_x86-64.tgz)
 - [Linux 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.1/cashflow_linux_x86-64.tgz)
 
+### 요구사항, 데이터 접근
+cashflow를 실행하기 위해서는 사람별, 장비별로 해당 db에 접근할 수 있는 아마존웹서비스 AccessKey, SecretAccessKey 가 필요합니다.
+
+- 보안정책은 프로그래밍 처리하지 않습니다. 각 계정별로 수동처리합니다.
+
 ### 사용법
 터미널에서 아래처럼 타이핑합니다.
 ```
@@ -46,10 +51,6 @@ $ cashflow
 
 위 데이터는 실제 데이터가 아닌 임의데이터를 넣었습니다.
 
-### 데이터 접근
-실제로 cashflow를 실행하기 위해서는 사람별, 장비별로 해당 db에 접근할 수 있는 아마존웹서비스 AccessKey, SecretAccessKey 가 필요합니다.
-
-- 보안정책은 프로그래밍 처리하지 않습니다. 각 계정별로 수동처리합니다.
 
 ### 데이터 입력
 
