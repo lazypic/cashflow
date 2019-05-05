@@ -5,9 +5,9 @@
 4년에 걸쳐 현 시점에서 분기별 매출 및 분기별 지출을 출력하는 간단한 터미널 소프트웨어 입니다.
 
 ### 다운로드(준비중)
-- Windows 64bit
-- macOS 64bit
-- Linux 64bit
+- [Windows 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.1/cashflow_windows_x86-64.tgz)
+- [macOS 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.1/cashflow_darwin_x86-64.tgz)
+- [Linux 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.1/cashflow_linux_x86-64.tgz)
 
 ### 사용법
 터미널에서 아래처럼 타이핑합니다.
