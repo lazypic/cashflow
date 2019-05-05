@@ -18,7 +18,7 @@ func main() {
 	now := time.Now()
 	regionPtr := flag.String("region", "ap-northeast-2", "aws region name")
 	profilePtr := flag.String("profile", "lazypic", "aws credentials profile name")
-	tablePtr := flag.String("table", "cashflow_demo", "aws dynamodb table name")
+	tablePtr := flag.String("table", "cashflow", "aws dynamodb table name")
 	datePtr := flag.String("date", now.Format(time.RFC3339), "deposit date")
 	amountPtr := flag.Float64("amount", 0, "deposit amount (Required)")
 	recipientPtr := flag.String("recipient", "lazypic", "recipient")
@@ -27,7 +27,7 @@ func main() {
 	unitPtr := flag.String("unit", "KRW", "mometary unit")
 	senderPtr := flag.String("sender", "", "sender (Required)")
 	typePtr := flag.String("type", "donation", "type name: donation, investment, profit(일시수익), contract(계약금), interim(중도금), balance(잔금), addon(추가금)")
-	actualDatePtr := flag.String("actualdate", now.Format(time.RFC3339), "actual deposit date")
+	actualDatePtr := flag.String("actualdate", "", "actual deposit date")
 	actualAmountPtr := flag.Float64("actualamount", 0, "actual deposit amount")
 	receivablesPtr := flag.Bool("receivables", false, "recivables status")
 	helpPtr := flag.Bool("help", false, "print help")
@@ -40,7 +40,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "%s string is not RFC3339 format", *datePtr)
 		os.Exit(1)
 	}
-	if !rfc3339.MatchString(*actualDatePtr) {
+	if *actualDatePtr != "" && !rfc3339.MatchString(*actualDatePtr) {
 		fmt.Fprintf(os.Stderr, "%s string is not RFC3339 format", *actualDatePtr)
 		os.Exit(1)
 	}
@@ -117,6 +117,9 @@ func main() {
 	}
 	if *actualAmountPtr == 0 {
 		*actualAmountPtr = *amountPtr
+	}
+	if *actualDatePtr == "" {
+		*actualDatePtr = *datePtr
 	}
 
 	item := Item{
