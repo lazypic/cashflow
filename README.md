@@ -4,7 +4,7 @@
 정확한 재무,회계를 도와주는 툴이 아닙니다.
 4년에 걸쳐 현 시점에서 분기별 매출 및 분기별 지출을 출력하는 간단한 터미널 소프트웨어 입니다.
 
-### 다운로드(준비중)
+### 다운로드
 - [Windows 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.1/cashflow_windows_x86-64.tgz)
 - [macOS 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.1/cashflow_darwin_x86-64.tgz)
 - [Linux 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.1/cashflow_linux_x86-64.tgz)
