@@ -10,7 +10,7 @@
 - [Linux 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.1/cashflow_linux_x86-64.tgz)
 
 ### 요구사항, 데이터 접근
-cashflow를 실행하기 위해서는 사람별, 장비별로 해당 db에 접근할 수 있는 아마존웹서비스 AccessKey, SecretAccessKey 가 필요합니다.
+cashflow를 실행하기 위해서는 사람별, 장비별 보안키가 필요합니다. : 해당 db 접근가능한 AccessKey, SecretAccessKey
 
 - 보안정책은 프로그래밍 처리하지 않습니다. 각 계정별로 수동처리합니다.
 
