@@ -77,7 +77,7 @@ $ cashflow --sender 클라이언트 --amount 1000000 --type contract --project c
 - --receivables : 미수금 상태
 - --recipient : 받는사람
 - --region : db리전. 기본값: 서울리전(ap-northeast-2)
-- --sender : 보낸사람
+- --sender : 보낸사람. 보낸이가 `lazypic` 이라면 지출로 잡힌다.
 - --table : aws dynamodb 데이터베이스 테이블 이름. 기본값: cashflow
 - --type : 입금형태
 	- donation : 기부(기본값)
