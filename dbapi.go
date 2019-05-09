@@ -116,6 +116,40 @@ func GetQuarter(db dynamodb.DynamoDB, tableName string, quarter string) (float64
 	return in, out, err
 }
 
+// GetReceivables 함수는 미수금 리스트를 반환한다.
+func GetReceivables(db dynamodb.DynamoDB, tableName string) ([]Item, error) {
+	items := []Item{}
+
+	filt := expression.Name("Receivables").Equal(expression.Value(true))
+	proj := expression.NamesList(expression.Name("DepositAmount"), expression.Name("Sender"), expression.Name("Receivables"))
+	expr, err := expression.NewBuilder().WithFilter(filt).WithProjection(proj).Build()
+	if err != nil {
+		return items, err
+	}
+	params := &dynamodb.ScanInput{
+		ExpressionAttributeNames:  expr.Names(),
+		ExpressionAttributeValues: expr.Values(),
+		FilterExpression:          expr.Filter(),
+		ProjectionExpression:      expr.Projection(),
+		TableName:                 aws.String(tableName),
+	}
+	result, err := db.Scan(params)
+	if err != nil {
+		return items, err
+	}
+
+	for _, i := range result.Items {
+		item := Item{}
+
+		err = dynamodbattribute.UnmarshalMap(i, &item)
+		if err != nil {
+			return items, err
+		}
+		items = append(items, item)
+	}
+	return items, nil
+}
+
 func hasItem(db dynamodb.DynamoDB, tableName string, primarykey string, sortkey string) bool {
 	result, err := db.GetItem(&dynamodb.GetItemInput{
 		TableName: aws.String(tableName),

@@ -96,6 +96,15 @@ func main() {
 			qr.QT.Out = totalOut
 			qr.Print()
 		}
+		// 미수금 출력
+		fmt.Println("Receivables List")
+		items, err := GetReceivables(*db, *tablePtr)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
+		}
+		for _, i := range items {
+			fmt.Println(i.Sender, int(i.DepositAmount))
+		}
 		os.Exit(0)
 	}
 

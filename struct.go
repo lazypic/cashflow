@@ -81,5 +81,5 @@ func (qr *QuarterlyReport) Print() {
 	for _, v := range data {
 		table.Append(v)
 	}
-	table.Render() // Send output
+	table.Render()
 }
