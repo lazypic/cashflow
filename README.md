@@ -9,10 +9,10 @@
 - [macOS 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.1/cashflow_darwin_x86-64.tgz)
 - [Linux 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.1/cashflow_linux_x86-64.tgz)
 
-### 요구사항, 데이터 접근
-cashflow를 실행하기 위해서는 사람별, 장비별 보안키가 필요합니다. : 해당 db 접근가능한 AccessKey, SecretAccessKey
+### 보안
+cashflow를 실행하기 위해서는 aws에서 발급된 AccessKey, SecretAccessKey 가 필요합니다.
 
-- 보안정책은 프로그래밍 처리하지 않습니다. 각 계정별로 수동처리합니다.
+- Lazypic은 보안정책 설정부분은 내부정책상 프로그래밍 처리하지 않습니다. 각 계정별로 수동처리합니다.
 
 ### 사용법
 터미널에서 아래처럼 타이핑합니다.
