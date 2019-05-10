@@ -151,7 +151,7 @@ func GetReceivables(db dynamodb.DynamoDB, tableName string) ([]Item, error) {
 }
 
 func hasItem(db dynamodb.DynamoDB, tableName string, primarykey string, sortkey string) bool {
-	result, err := db.GetItem(&dynamodb.GetItemInput{
+	input := &dynamodb.GetItemInput{
 		TableName: aws.String(tableName),
 		Key: map[string]*dynamodb.AttributeValue{
 			"Quarter": {
@@ -161,18 +161,13 @@ func hasItem(db dynamodb.DynamoDB, tableName string, primarykey string, sortkey 
 				S: aws.String(sortkey),
 			},
 		},
-	})
+	}
+	result, err := db.GetItem(input)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
 		return false
 	}
-	item := Item{}
-	err = dynamodbattribute.UnmarshalMap(result.Item, &item)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
-		return false
-	}
-	if item.DepositDate == "" {
+	if result.Item == nil {
 		return false
 	}
 	return true
