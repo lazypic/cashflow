@@ -7,9 +7,9 @@
 - 세금을 예측하기 위해서 사용합니다.
 
 ### 다운로드
-- [Windows 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.1/cashflow_windows_x86-64.tgz)
-- [macOS 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.1/cashflow_darwin_x86-64.tgz)
-- [Linux 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.1/cashflow_linux_x86-64.tgz)
+- [Windows 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.2/cashflow_windows_x86-64.tgz)
+- [macOS 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.2/cashflow_darwin_x86-64.tgz)
+- [Linux 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.2/cashflow_linux_x86-64.tgz)
 
 ### 보안
 cashflow를 실행하기 위해서는 aws에서 발급된 AccessKey, SecretAccessKey 가 필요합니다.
