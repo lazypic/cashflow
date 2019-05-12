@@ -58,7 +58,7 @@ $ cashflow
 
 ### 데이터 입력
 
-기부금 입력시 (donation)
+기부금 입력시 (기본 Type은 "donation" 입니다.)
 
 ```bash
 $ cashflow --sender 김한웅 --amount 10000
