@@ -83,14 +83,20 @@ $ cashflow --sender 클라이언트 --amount 1000000 --type contract --project c
 - --region : db리전. 기본값: 서울리전(ap-northeast-2)
 - --sender : 보낸사람. 보낸이가 `lazypic` 이라면 지출로 잡힌다.
 - --table : aws dynamodb 데이터베이스 테이블 이름. 기본값: cashflow
-- --type : 입금형태
-	- donation : 기부(기본값)
-	- investment : 투자
-	- profit : 일시수익
-	- contract : 계약금
-	- interim : 중도금
-	- balance : 잔금
-	- addon : 추가금
+- --type : 입출금 타입. 아래 타입을 사용할 수 있습니다.
+	- 수익
+		- donation : 기부(기본값)
+		- investment : 투자
+		- profit : 일시수익
+		- contract : 계약금
+		- interim, interim1, interim2 : 중도금
+		- balance : 잔금
+		- addon : 추가금
+	- 지출
+		- salary : 월급
+		- wage : 시급, 주급
+		- outsourcing : 외주금
+		- other : 활동비
 - --unit : 화폐단위. 기본값: `KRW`, [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) 무역 규약에서 허용하는 문자만 입력 가능합니다.
 
 ### 백업
