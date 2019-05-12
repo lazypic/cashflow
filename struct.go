@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"os"
 
@@ -51,6 +52,35 @@ func (i *Item) Print() {
 	fmt.Printf("%s -> %s\n", i.Sender, i.Recipient)
 	fmt.Println("Project:", i.Project)
 	fmt.Println("Description:", i.Description)
+}
+
+func (i *Item) checkType() error {
+	switch i.Typ {
+	case "donation": // 수익: 기부
+		return nil
+	case "investment": // 수익: 콘텐츠투자
+		return nil
+	case "profit": // 수익: 일시적수익
+		return nil
+	case "contract": // 수익: 계약금
+		return nil
+	case "interim", "interim1", "interim2": // 수익: 중도금
+		return nil
+	case "balance": // 수익: 잔금
+		return nil
+	case "addon": // 수익: 추가금
+		return nil
+	case "salary": // 지출: 월급
+		return nil
+	case "wage": // 지출: 시급, 주급
+		return nil
+	case "outsourcing": // 지출: 외주금
+		return nil
+	case "other": // 지출: 활동비
+		return nil
+	default:
+		return errors.New("Not support type")
+	}
 }
 
 // Print 메소드는 QuarterlyReport 자료구조를 표로 출력한다.
