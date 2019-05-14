@@ -145,6 +145,11 @@ func main() {
 		Description:         *descriptionPtr,
 		Receivables:         *receivablesPtr,
 	}
+	err = item.checkType()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
+		os.Exit(1)
+	}
 	// 데이터가 존재하는지 체크
 	if hasItem(*db, *tablePtr, primaryKey, *datePtr) {
 		fmt.Println("The data already exists. Can not add data.")

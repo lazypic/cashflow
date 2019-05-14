@@ -1,18 +1,20 @@
 # cashflow
 자본의 흐름, 계획을 도와주는 Backend Commandline Tool
 
-정확한 재무,회계를 도와주는 툴이 아닙니다.
-4년에 걸쳐 현 시점에서 분기별 매출 및 분기별 지출을 출력하는 간단한 터미널 소프트웨어 입니다.
+- 용도 : 프리랜서, 그룹, 기업
+- 정확한 재무,회계를 도와주는 툴이 아닙니다.
+- 4년에 걸쳐 현 시점에서 분기별 매출 및 분기별 지출을 출력하는 간단한 터미널 소프트웨어 입니다.
+- 세금을 예측하기 위해서 사용합니다.
 
 ### 다운로드
-- [Windows 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.1/cashflow_windows_x86-64.tgz)
-- [macOS 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.1/cashflow_darwin_x86-64.tgz)
-- [Linux 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.1/cashflow_linux_x86-64.tgz)
+- [Windows 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.2/cashflow_windows_x86-64.tgz)
+- [macOS 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.2/cashflow_darwin_x86-64.tgz)
+- [Linux 64bit](https://github.com/lazypic/cashflow/releases/download/v0.0.2/cashflow_linux_x86-64.tgz)
 
-### 요구사항, 데이터 접근
-cashflow를 실행하기 위해서는 사람별, 장비별 보안키가 필요합니다. : 해당 db 접근가능한 AccessKey, SecretAccessKey
+### 보안
+cashflow를 실행하기 위해서는 aws에서 발급된 AccessKey, SecretAccessKey 가 필요합니다.
 
-- 보안정책은 프로그래밍 처리하지 않습니다. 각 계정별로 수동처리합니다.
+- Lazypic은 보안정책 설정부분은 내부정책상 프로그래밍 처리하지 않습니다. 각 계정별로 수동처리합니다.
 
 ### 사용법
 터미널에서 아래처럼 타이핑합니다.
@@ -51,10 +53,12 @@ $ cashflow
 
 위 데이터는 실제 데이터가 아닌 임의데이터를 넣었습니다.
 
+> 미수금이 존재한다면, 표가 출력되고 미수금 리스트가 출력됩니다.
+
 
 ### 데이터 입력
 
-기부금 입력시 (donation)
+기부금 입력시 (기본 Type은 "donation" 입니다.)
 
 ```bash
 $ cashflow --sender 김한웅 --amount 10000
@@ -79,14 +83,20 @@ $ cashflow --sender 클라이언트 --amount 1000000 --type contract --project c
 - --region : db리전. 기본값: 서울리전(ap-northeast-2)
 - --sender : 보낸사람. 보낸이가 `lazypic` 이라면 지출로 잡힌다.
 - --table : aws dynamodb 데이터베이스 테이블 이름. 기본값: cashflow
-- --type : 입금형태
-	- donation : 기부(기본값)
-	- investment : 투자
-	- profit : 일시수익
-	- contract : 계약금
-	- interim : 중도금
-	- balance : 잔금
-	- addon : 추가금
+- --type : 입출금 타입. 아래 타입을 사용할 수 있습니다.
+	- 수익
+		- donation : 기부(기본값)
+		- investment : 투자
+		- profit : 일시수익
+		- contract : 계약금
+		- interim, interim1, interim2 : 중도금
+		- balance : 잔금
+		- addon : 추가금
+	- 지출
+		- salary : 월급
+		- wage : 시급, 주급
+		- outsourcing : 외주금
+		- other : 활동비
 - --unit : 화폐단위. 기본값: `KRW`, [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) 무역 규약에서 허용하는 문자만 입력 가능합니다.
 
 ### 백업
