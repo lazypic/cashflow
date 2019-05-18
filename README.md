@@ -1,4 +1,5 @@
-# cashflow
+![cashflow](figures/logo.svg)
+
 자본의 흐름, 계획을 도와주는 Backend Commandline Tool
 
 - 용도 : 프리랜서, 그룹, 기업
