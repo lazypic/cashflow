@@ -1,4 +1,4 @@
-![cashflow](figures/logo.svg)
+![cashflow](figures/logo.svg | width=600)
 
 자본의 흐름, 계획을 도와주는 Backend Commandline Tool
 
