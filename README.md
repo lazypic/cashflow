@@ -82,7 +82,7 @@ $ cashflow --sender 클라이언트 --amount 1000000 --type contract --project c
 - --receivables : 미수금 상태
 - --recipient : 받는사람
 - --region : db리전. 기본값: 서울리전(ap-northeast-2)
-- --sender : 보낸사람. 보낸이가 `lazypic` 이라면 지출로 잡힌다.
+- --sender : 보낸사람
 - --table : aws dynamodb 데이터베이스 테이블 이름. 기본값: cashflow
 - --type : 입출금 타입. 아래 타입을 사용할 수 있습니다.
 	- 수익
@@ -113,8 +113,8 @@ dynamoDB에서 Global Table을 활성화 시킵니다.
 	- 대부분의 거래내역은 기가 단위 미만입니다. 백업 서비스를 포함하여 안정적인 서비스가 수년에 걸쳐서 $0~$1의 운용비로 사용할 수 있는 소프트웨어입니다.
 - cashflow에서는 데이터의 흐름만 있고, 삭제는 없습니다.
 - cashflow는 최종적으로 다음 dynamoDB 들과 연동될 예정입니다.
-    - projectflow : 프로젝트 비용과 관련된 리스트
-	- assetflow : 회사 에셋(장비, 하드웨어, 소프트웨어) 비용과 관련된 리스트
+	- [assetflow](https://github.com/lazypic/assetflow) : 회사 에셋(하드웨어, 소프트웨어, 공용계정, 부동산) 비용 관리툴
+	- projectflow : 프로젝트 비용과 관련된 리스트
 	- userflow : 사용자에게 지출되는 비용과 관련된 리스트
 
 ### 라이센스 : BSD-3-Clause
