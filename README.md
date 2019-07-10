@@ -114,7 +114,8 @@ dynamoDB에서 Global Table을 활성화 시킵니다.
 - cashflow에서는 데이터의 흐름만 있고, 삭제는 없습니다.
 - cashflow는 최종적으로 다음 dynamoDB 들과 연동될 예정입니다.
 	- [assetflow](https://github.com/lazypic/assetflow) : 회사 에셋(하드웨어, 소프트웨어, 공용계정, 부동산) 비용 관리툴
-	- projectflow : 프로젝트 비용과 관련된 리스트
-	- userflow : 사용자에게 지출되는 비용과 관련된 리스트
+	- [projectflow](https://github.com/lazypic/projectflow): 프로젝트 비용과 관련된 리스트
+	- [userflow](https://github.com/lazypic/userflow): 사용자에게 지출되는 비용과 관련된 리스트
+	- [castflow](https://github.com/lazypic/castflow): ipr 관리툴
 
 ### 라이센스 : BSD-3-Clause
