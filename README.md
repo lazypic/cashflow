@@ -62,29 +62,29 @@ $ cashflow
 기부금 입력시 (기본 Type은 "donation" 입니다.)
 
 ```bash
-$ cashflow --sender 김한웅 --amount 10000
+$ cashflow -sender 김한웅 -amount 10000
 ```
 
 프로젝트 `circle` 계약금 입력시
 ```bash
-$ cashflow --sender 클라이언트 --amount 1000000 --type contract --project circle
+$ cashflow -sender 클라이언트 -amount 1000000 -type contract -project circle
 ```
 
 #### 옵션
-- --actualamount : 실제입금금액
-- --actualdate : 실제입금일(기본값은 현시간의 RFC3339시간포멧입니다. "2019-05-05T22:30:26+09:00")
-- --amount : deposit amount (Required)
-- --date : 필수값, 입금일(기본값은 현시간의 RFC3339시간포멧입니다. "2019-05-05T22:30:26+09:00")
-- --description : 추가설명
-- --help : 도움말 출력
-- --profile : AWS db접근을 위해 credentials 파일에 선언된 프로파일명
-- --project : 프로젝트코드
-- --receivables : 미수금 상태
-- --recipient : 받는사람
-- --region : db리전. 기본값: 서울리전(ap-northeast-2)
-- --sender : 보낸사람
-- --table : aws dynamodb 데이터베이스 테이블 이름. 기본값: cashflow
-- --type : 입출금 타입. 아래 타입을 사용할 수 있습니다.
+- -actualamount : 실제입금금액
+- -actualdate : 실제입금일(기본값은 현시간의 RFC3339시간포멧입니다. "2019-05-05T22:30:26+09:00")
+- -amount : deposit amount (Required)
+- -date : 필수값, 입금일(기본값은 현시간의 RFC3339시간포멧입니다. "2019-05-05T22:30:26+09:00")
+- -description : 추가설명
+- -help : 도움말 출력
+- -profile : AWS db접근을 위해 credentials 파일에 선언된 프로파일명
+- -project : 프로젝트코드
+- -receivables : 미수금 상태
+- -recipient : 받는사람
+- -region : db리전. 기본값: 서울리전(ap-northeast-2)
+- -sender : 보낸사람
+- -table : aws dynamodb 데이터베이스 테이블 이름. 기본값: cashflow
+- -type : 입출금 타입. 아래 타입을 사용할 수 있습니다.
 	- 수익
 		- donation : 기부(기본값)
 		- investment : 투자
@@ -98,7 +98,7 @@ $ cashflow --sender 클라이언트 --amount 1000000 --type contract --project c
 		- wage : 시급, 주급
 		- outsourcing : 외주금
 		- other : 활동비
-- --unit : 화폐단위. 기본값: `KRW`, [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) 무역 규약에서 허용하는 문자만 입력 가능합니다.
+- -unit : 화폐단위. 기본값: `KRW`, [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) 무역 규약에서 허용하는 문자만 입력 가능합니다.
 
 ### 백업
 dynamoDB는 Full managed DB입니다. 지속 백업기능을 켜서 사용합니다.
@@ -113,7 +113,7 @@ dynamoDB에서 Global Table을 활성화 시킵니다.
 	- 대부분의 거래내역은 기가 단위 미만입니다. 백업 서비스를 포함하여 안정적인 서비스가 수년에 걸쳐서 $0~$1의 운용비로 사용할 수 있는 소프트웨어입니다.
 - cashflow에서는 데이터의 흐름만 있고, 삭제는 없습니다.
 - cashflow는 최종적으로 다음 dynamoDB 들과 연동될 예정입니다.
-	- [assetflow](https://github.com/lazypic/assetflow) : 회사 에셋(하드웨어, 소프트웨어, 공용계정, 부동산) 비용 관리툴
+	- [assetflow](https://github.com/lazypic/assetflow): 회사 에셋(하드웨어, 소프트웨어, 공용계정, 부동산) 비용 관리툴
 	- [projectflow](https://github.com/lazypic/projectflow): 프로젝트 비용과 관련된 리스트
 	- [userflow](https://github.com/lazypic/userflow): 사용자에게 지출되는 비용과 관련된 리스트
 	- [castflow](https://github.com/lazypic/castflow): ipr 관리툴
